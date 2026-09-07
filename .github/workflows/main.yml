@@ -17,25 +17,18 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Fix gradle-wrapper.jar
+      - name: Download fresh gradle-wrapper.jar
         run: |
-          echo "Downloading fresh gradle-wrapper.jar..."
           curl -L \
             "https://github.com/gradle/gradle/raw/refs/tags/v8.11.1/gradle/wrapper/gradle-wrapper.jar" \
             -o gradle/wrapper/gradle-wrapper.jar
-          
-          echo "Verifying jar file..."
-          file gradle/wrapper/gradle-wrapper.jar
           ls -la gradle/wrapper/
 
       - name: Make gradlew executable
         run: chmod +x gradlew
 
       - name: Build Debug APK
-        run: |
-          ./gradlew assembleDebug \
-            --no-daemon \
-            --stacktrace
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
         env:
           GRADLE_OPTS: "-Dorg.gradle.daemon=false"
 
