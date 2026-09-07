@@ -17,24 +17,19 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Validate Gradle Wrapper
-        uses: gradle/actions/wrapper-validation@v4
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-
-      - name: Fix Gradle Wrapper
+      - name: Fix gradle-wrapper.jar
         run: |
-          chmod +x gradlew
-          # ถ้า gradle-wrapper.jar เสียหาย ให้ download ใหม่
-          if ! unzip -t gradle/wrapper/gradle-wrapper.jar > /dev/null 2>&1; then
-            echo "gradle-wrapper.jar is corrupt, downloading fresh..."
-            GRADLE_VERSION=$(grep "distributionUrl" gradle/wrapper/gradle-wrapper.properties | grep -oP '\d+\.\d+(\.\d+)?')
-            wget -q "https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip" -O gradle-dist.zip
-            unzip -q gradle-dist.zip
-            cp gradle-${GRADLE_VERSION}/lib/gradle-launcher-*.jar gradle/wrapper/gradle-wrapper.jar
-            rm -rf gradle-dist.zip gradle-${GRADLE_VERSION}
-          fi
+          echo "Downloading fresh gradle-wrapper.jar..."
+          curl -L \
+            "https://github.com/gradle/gradle/raw/refs/tags/v8.11.1/gradle/wrapper/gradle-wrapper.jar" \
+            -o gradle/wrapper/gradle-wrapper.jar
+          
+          echo "Verifying jar file..."
+          file gradle/wrapper/gradle-wrapper.jar
+          ls -la gradle/wrapper/
+
+      - name: Make gradlew executable
+        run: chmod +x gradlew
 
       - name: Build Debug APK
         run: |
@@ -42,7 +37,7 @@ jobs:
             --no-daemon \
             --stacktrace
         env:
-          GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
+          GRADLE_OPTS: "-Dorg.gradle.daemon=false"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
