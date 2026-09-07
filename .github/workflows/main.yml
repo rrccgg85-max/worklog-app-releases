@@ -36,3 +36,15 @@ jobs:
           name: WorkLog-Debug-APK
           path: app/build/outputs/apk/debug/*.apk
           retention-days: 7
+
+       - name: Create debug keystore
+        run: |
+          keytool -genkey -v \
+            -keystore debug.keystore \
+            -alias androiddebugkey \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -storepass android \
+            -keypass android \
+            -dname "CN=Android Debug,O=Android,C=US"
