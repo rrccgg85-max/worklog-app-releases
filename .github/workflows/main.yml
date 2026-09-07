@@ -1,16 +1,11 @@
 name: Build Android APK
-
 on:
   workflow_dispatch:
 
 jobs:
   build:
-    name: Build Debug APK
     runs-on: ubuntu-latest
     timeout-minutes: 30
-
-    env:
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Dkotlin.compiler.execution.strategy=in-process"
 
     steps:
       - name: Checkout Code
@@ -20,29 +15,38 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: 17
+          java-version: '17'
 
-      - name: Prepare Keystore & Permissions
+      - name: Validate Gradle Wrapper
+        uses: gradle/actions/wrapper-validation@v4
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Fix Gradle Wrapper
         run: |
           chmod +x gradlew
-          if [ -f "debug.keystore.base64" ]; then
-            base64 -d debug.keystore.base64 > debug.keystore || true
+          # ถ้า gradle-wrapper.jar เสียหาย ให้ download ใหม่
+          if ! unzip -t gradle/wrapper/gradle-wrapper.jar > /dev/null 2>&1; then
+            echo "gradle-wrapper.jar is corrupt, downloading fresh..."
+            GRADLE_VERSION=$(grep "distributionUrl" gradle/wrapper/gradle-wrapper.properties | grep -oP '\d+\.\d+(\.\d+)?')
+            wget -q "https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip" -O gradle-dist.zip
+            unzip -q gradle-dist.zip
+            cp gradle-${GRADLE_VERSION}/lib/gradle-launcher-*.jar gradle/wrapper/gradle-wrapper.jar
+            rm -rf gradle-dist.zip gradle-${GRADLE_VERSION}
           fi
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug --no-daemon --no-build-cache --stacktrace --info
+        run: |
+          ./gradlew assembleDebug \
+            --no-daemon \
+            --stacktrace
+        env:
+          GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
 
-      - name: Upload APK Artifact
-        if: success()
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: WorkLog-APK
+          name: WorkLog-Debug-APK
           path: app/build/outputs/apk/debug/*.apk
-
-      - name: Show Build Logs on Failure
-        if: failure()
-        run: |
-          echo "=== DUMPING GRADLE BUILD LOGS ==="
-          find . -name "*.log" -path "*/build/*" | xargs tail -n 100 2>/dev/null || true
-          cat app/build/outputs/logs/*.log 2>/dev/null || true
-          find app/build/reports -name "*.txt" 2>/dev/null | xargs cat 2>/dev/null || true
+          retention-days: 7
