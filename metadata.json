@@ -1,0 +1,6 @@
+{
+  "name": "Work Log - บันทึกงาน",
+  "description": "แอปพลิเคชันบันทึก Log การทำงานส่วนตัว พร้อมระบบ AI วิเคราะห์จัดหมวดหมู่อัตโนมัติและสรุปปิดเคส",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
