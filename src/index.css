@@ -1,0 +1,504 @@
+@import "tailwindcss";
+
+:root {
+  font-family: 'Prompt', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+body {
+  font-family: 'Prompt', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #090D16;
+  color: #F1F5F9;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer utilities {
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.2s ease-out forwards;
+  }
+}
+
+/* Sleek Bento Dark Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #090D16;
+}
+::-webkit-scrollbar-thumb {
+  background: #1E293B;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    font-family: 'Prompt', sans-serif !important;
+  }
+  header, footer, nav, .print\:hidden {
+    display: none !important;
+  }
+  #print-work-order-backdrop {
+    position: static !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+  #print-work-order-container {
+    max-width: 100% !important;
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+  }
+}
+
+/* --- Premium High-Contrast Light Mode Style Overrides --- */
+.light-mode {
+  background-color: #f8fafc !important; /* slate-50 */
+  color: #0f172a !important; /* slate-900 */
+}
+
+/* 1. Base Canvas & Surface Backgrounds */
+.light-mode header,
+.light-mode footer,
+.light-mode .bg-slate-900,
+.light-mode .bg-slate-900\/95,
+.light-mode .bg-slate-900\/90,
+.light-mode .bg-slate-900\/85,
+.light-mode .bg-slate-900\/80,
+.light-mode .bg-slate-900\/70,
+.light-mode .bg-slate-950,
+.light-mode .bg-slate-950\/90,
+.light-mode .bg-slate-950\/80,
+.light-mode .bg-slate-950\/70,
+.light-mode .bg-\[\#090D16\],
+.light-mode .bg-\[\#090D16\]\/95,
+.light-mode .bg-\[\#0c121e\],
+.light-mode .bg-\[\#0c121e\]\/95,
+.light-mode .bg-\[\#0c1424\] {
+  background-color: #ffffff !important;
+}
+
+/* Secondary containers, inner wells, and code/stat backgrounds */
+.light-mode .bg-slate-800,
+.light-mode .bg-slate-800\/80,
+.light-mode .bg-slate-800\/60,
+.light-mode .bg-slate-800\/50,
+.light-mode .bg-slate-800\/40,
+.light-mode .bg-slate-900\/60,
+.light-mode .bg-slate-900\/50,
+.light-mode .bg-slate-950\/60,
+.light-mode .bg-slate-950\/50,
+.light-mode .bg-slate-950\/40 {
+  background-color: #f1f5f9 !important; /* slate-100 */
+}
+
+/* 2. Crisp Borders & Dividers */
+.light-mode .border-slate-800,
+.light-mode .border-slate-800\/80,
+.light-mode .border-slate-800\/60,
+.light-mode .border-slate-700,
+.light-mode .border-slate-700\/80,
+.light-mode .border-slate-700\/60,
+.light-mode .border-slate-900,
+.light-mode .divide-slate-800,
+.light-mode .divide-slate-800\/60,
+.light-mode .divide-slate-800\/80 {
+  border-color: #cbd5e1 !important; /* slate-300 */
+}
+
+/* Card elevation in light mode - ensures cards visibly float above canvas */
+.light-mode .rounded-xl.border,
+.light-mode .rounded-2xl.border,
+.light-mode .rounded-3xl.border {
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.08), 0 1px 2px -1px rgba(15, 23, 42, 0.04) !important;
+}
+
+/* 3. Deep, Crisp Typography (Never washed out or submerged on light backgrounds) */
+.light-mode h1.text-white,
+.light-mode h2.text-white,
+.light-mode h3.text-white,
+.light-mode h4.text-white,
+.light-mode p.text-white:not(button *),
+.light-mode span.text-white:not(button *):not([class*="bg-"]),
+.light-mode .text-slate-100:not(button):not(button *),
+.light-mode .text-slate-200:not(button):not(button *) {
+  color: #0f172a !important; /* slate-900 */
+}
+
+.light-mode .text-slate-300:not(button *) {
+  color: #1e293b !important; /* slate-800 */
+}
+
+.light-mode .text-slate-400:not(button *) {
+  color: #334155 !important; /* slate-700 - punchy, readable contrast */
+}
+
+.light-mode .text-slate-500:not(button *) {
+  color: #475569 !important; /* slate-600 */
+}
+
+.light-mode .text-slate-600:not(button *) {
+  color: #64748b !important; /* slate-500 */
+}
+
+/* 4. SOLID PRIMARY ACTION BUTTONS (MUST RETAIN PURE WHITE TEXT AND ICONS) */
+.light-mode button.bg-orange-600,
+.light-mode button.bg-orange-600 *,
+.light-mode button.bg-orange-500,
+.light-mode button.bg-orange-500 *,
+.light-mode button.bg-indigo-600,
+.light-mode button.bg-indigo-600 *,
+.light-mode button.bg-indigo-500,
+.light-mode button.bg-indigo-500 *,
+.light-mode button.bg-emerald-600,
+.light-mode button.bg-emerald-600 *,
+.light-mode button.bg-emerald-500,
+.light-mode button.bg-emerald-500 *,
+.light-mode button.bg-rose-600,
+.light-mode button.bg-rose-600 *,
+.light-mode button.bg-rose-500,
+.light-mode button.bg-rose-500 *,
+.light-mode button.bg-blue-600,
+.light-mode button.bg-blue-600 *,
+.light-mode button.bg-blue-500,
+.light-mode button.bg-blue-500 * {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+.light-mode button.bg-orange-600 svg,
+.light-mode button.bg-orange-500 svg,
+.light-mode button.bg-indigo-600 svg,
+.light-mode button.bg-indigo-500 svg,
+.light-mode button.bg-emerald-600 svg,
+.light-mode button.bg-emerald-500 svg,
+.light-mode button.bg-rose-600 svg,
+.light-mode button.bg-rose-500 svg,
+.light-mode button.bg-blue-600 svg,
+.light-mode button.bg-blue-500 svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+/* Force white text on any button with text-white */
+.light-mode button.text-white,
+.light-mode button .text-white {
+  color: #ffffff !important;
+}
+
+/* Secondary neutral buttons */
+.light-mode button.bg-slate-800,
+.light-mode button.bg-slate-700 {
+  background-color: #f1f5f9 !important;
+  color: #1e293b !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+.light-mode button.bg-slate-800:hover,
+.light-mode button.bg-slate-700:hover {
+  background-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+.light-mode button.bg-slate-800 svg,
+.light-mode button.bg-slate-700 svg {
+  color: #1e293b !important;
+  stroke: #1e293b !important;
+}
+
+/* 4.1 HIGH CONTRAST ICONS (Never wash out or turn invisible) */
+.light-mode svg {
+  flex-shrink: 0;
+}
+
+.light-mode svg.text-rose-400,
+.light-mode svg.text-rose-500,
+.light-mode svg.text-rose-600,
+.light-mode svg.text-rose-700,
+.light-mode .text-rose-400 svg,
+.light-mode .text-rose-500 svg,
+.light-mode .text-rose-600 svg,
+.light-mode .text-rose-700 svg {
+  color: #e11d48 !important; /* vibrant rose */
+  stroke: #e11d48 !important;
+}
+
+.light-mode svg.text-indigo-400,
+.light-mode svg.text-indigo-500,
+.light-mode svg.text-indigo-600,
+.light-mode .text-indigo-400 svg,
+.light-mode .text-indigo-500 svg,
+.light-mode .text-indigo-600 svg {
+  color: #4f46e5 !important;
+  stroke: #4f46e5 !important;
+}
+
+.light-mode svg.text-orange-400,
+.light-mode svg.text-orange-500,
+.light-mode svg.text-orange-600,
+.light-mode .text-orange-400 svg,
+.light-mode .text-orange-500 svg,
+.light-mode .text-orange-600 svg {
+  color: #ea580c !important;
+  stroke: #ea580c !important;
+}
+
+.light-mode svg.text-emerald-400,
+.light-mode svg.text-emerald-500,
+.light-mode svg.text-emerald-600,
+.light-mode .text-emerald-400 svg,
+.light-mode .text-emerald-500 svg,
+.light-mode .text-emerald-600 svg {
+  color: #059669 !important;
+  stroke: #059669 !important;
+}
+
+.light-mode svg.text-amber-400,
+.light-mode svg.text-amber-500,
+.light-mode .text-amber-400 svg,
+.light-mode .text-amber-500 svg {
+  color: #d97706 !important;
+  stroke: #d97706 !important;
+}
+
+.light-mode svg.text-slate-400,
+.light-mode svg.text-slate-500,
+.light-mode .text-slate-400 svg,
+.light-mode .text-slate-500 svg {
+  color: #475569 !important;
+  stroke: #475569 !important;
+}
+
+/* 5. HIGH-CONTRAST STATUS & ACCENT TEXT */
+/* Amber (Pending / Warnings) -> Deep rich golden brown/amber */
+.light-mode .text-amber-400,
+.light-mode .text-amber-300,
+.light-mode .text-amber-500,
+.light-mode .text-yellow-400,
+.light-mode .text-yellow-300 {
+  color: #92400e !important; /* amber-800 - 8.2:1 contrast on white */
+}
+
+/* Emerald (Completed / Success) -> Deep vibrant forest green */
+.light-mode .text-emerald-400,
+.light-mode .text-emerald-300,
+.light-mode .text-emerald-500,
+.light-mode .text-green-400,
+.light-mode .text-green-300 {
+  color: #065f46 !important; /* emerald-800 - 7.5:1 contrast on white */
+}
+
+/* Orange (Primary Brand / High Priority) -> Bold burnt orange */
+.light-mode .text-orange-400,
+.light-mode .text-orange-300 {
+  color: #9a3412 !important; /* orange-800 - 7.8:1 contrast on white */
+}
+
+/* Indigo (Tech / Cases / Navigation) -> Royal deep indigo */
+.light-mode .text-indigo-400,
+.light-mode .text-indigo-300 {
+  color: #3730a3 !important; /* indigo-800 - 8.9:1 contrast on white */
+}
+
+/* Blue (Analytics / General Accent) -> Deep sapphire blue */
+.light-mode .text-blue-400,
+.light-mode .text-blue-300 {
+  color: #1e40af !important; /* blue-800 - 8.5:1 contrast on white */
+}
+
+/* Rose / Red (Urgent High / Errors) -> Rich crimson red */
+.light-mode .text-rose-400,
+.light-mode .text-rose-300,
+.light-mode .text-red-400,
+.light-mode .text-red-300 {
+  color: #9f1239 !important; /* rose-800 - 7.6:1 contrast on white */
+}
+
+/* Purple (System Logs / Reassign) -> Deep royal purple */
+.light-mode .text-purple-400,
+.light-mode .text-purple-300 {
+  color: #5b21b6 !important; /* purple-800 */
+}
+
+/* Cyan & Sky (Mobile App / Technician) -> Deep ocean / teal */
+.light-mode .text-cyan-400,
+.light-mode .text-cyan-300 {
+  color: #155e75 !important; /* cyan-800 */
+}
+
+.light-mode .text-sky-400,
+.light-mode .text-sky-300 {
+  color: #075985 !important; /* sky-800 */
+}
+
+/* 6. STATUS BADGES & PILLS WITH HIGH-CONTRAST TINTS */
+/* Amber Badges (OPEN / Pending) */
+.light-mode .bg-amber-500\/10,
+.light-mode .bg-amber-500\/20,
+.light-mode .bg-amber-950,
+.light-mode .bg-amber-950\/60 {
+  background-color: #fef3c7 !important; /* amber-100 */
+  border-color: #fcd34d !important; /* amber-300 */
+  color: #92400e !important; /* amber-800 */
+}
+
+/* Emerald Badges (CLOSED / Completed) */
+.light-mode .bg-emerald-500\/10,
+.light-mode .bg-emerald-500\/20,
+.light-mode .bg-emerald-950,
+.light-mode .bg-emerald-950\/60 {
+  background-color: #d1fae5 !important; /* emerald-100 */
+  border-color: #6ee7b7 !important; /* emerald-300 */
+  color: #065f46 !important; /* emerald-800 */
+}
+
+/* Orange Badges */
+.light-mode .bg-orange-500\/10,
+.light-mode .bg-orange-500\/20,
+.light-mode .bg-orange-950,
+.light-mode .bg-orange-950\/60 {
+  background-color: #ffedd5 !important; /* orange-100 */
+  border-color: #fdba74 !important; /* orange-300 */
+  color: #9a3412 !important; /* orange-800 */
+}
+
+/* Rose / Red Badges (Urgent High / Errors) */
+.light-mode .bg-rose-500\/10,
+.light-mode .bg-rose-500\/20,
+.light-mode .bg-rose-950,
+.light-mode .bg-rose-950\/60 {
+  background-color: #ffe4e6 !important; /* rose-100 */
+  border-color: #fda4af !important; /* rose-300 */
+  color: #9f1239 !important; /* rose-800 */
+}
+
+/* Indigo Badges */
+.light-mode .bg-indigo-500\/10,
+.light-mode .bg-indigo-500\/20,
+.light-mode .bg-indigo-600\/20,
+.light-mode .bg-indigo-950,
+.light-mode .bg-indigo-950\/60 {
+  background-color: #e0e7ff !important; /* indigo-100 */
+  border-color: #a5b4fc !important; /* indigo-300 */
+  color: #3730a3 !important; /* indigo-800 */
+}
+
+/* Blue Badges */
+.light-mode .bg-blue-500\/10,
+.light-mode .bg-blue-500\/20,
+.light-mode .bg-blue-950 {
+  background-color: #dbeafe !important; /* blue-100 */
+  border-color: #93c5fd !important; /* blue-300 */
+  color: #1e40af !important; /* blue-800 */
+}
+
+/* Purple Badges */
+.light-mode .bg-purple-500\/10,
+.light-mode .bg-purple-500\/20,
+.light-mode .bg-purple-950 {
+  background-color: #f3e8ff !important; /* purple-100 */
+  border-color: #d8b4fe !important; /* purple-300 */
+  color: #5b21b6 !important; /* purple-800 */
+}
+
+/* Cyan Badges */
+.light-mode .bg-cyan-500\/10,
+.light-mode .bg-cyan-500\/20,
+.light-mode .bg-cyan-950,
+.light-mode .bg-cyan-950\/90 {
+  background-color: #cffafe !important; /* cyan-100 */
+  border-color: #67e8f9 !important; /* cyan-300 */
+  color: #155e75 !important; /* cyan-800 */
+}
+
+/* 7. TABLES - Crystal Clear Grid & Row Contrast */
+.light-mode table {
+  color: #0f172a !important;
+}
+
+.light-mode thead {
+  background-color: #f8fafc !important;
+  border-bottom: 2px solid #cbd5e1 !important;
+}
+
+.light-mode thead th {
+  color: #1e293b !important;
+  font-weight: 700 !important;
+}
+
+.light-mode tbody tr {
+  border-color: #e2e8f0 !important;
+}
+
+.light-mode tbody tr:hover,
+.light-mode .hover\:bg-slate-800\/50:hover,
+.light-mode .hover\:bg-slate-800:hover,
+.light-mode .hover\:bg-slate-800\/40:hover {
+  background-color: #f8fafc !important;
+}
+
+/* 8. INPUTS, SEARCH BARS & DROPDOWNS */
+.light-mode input:not([type="checkbox"]):not([type="radio"]),
+.light-mode select,
+.light-mode textarea {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1.5px solid #cbd5e1 !important;
+}
+
+.light-mode input:focus,
+.light-mode select:focus,
+.light-mode textarea:focus {
+  border-color: #ea580c !important; /* orange-600 */
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.15) !important;
+}
+
+.light-mode input::placeholder,
+.light-mode textarea::placeholder {
+  color: #64748b !important; /* slate-500 - clearly visible */
+}
+
+.light-mode select option {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+/* 9. MODALS & DIALOGS */
+.light-mode .fixed.inset-0.bg-slate-950\/80,
+.light-mode .fixed.inset-0.bg-slate-950\/70,
+.light-mode .fixed.inset-0.bg-slate-950\/90 {
+  background-color: rgba(15, 23, 42, 0.6) !important;
+}
+
+/* 10. RECHARTS & DATA VISUALIZATIONS */
+.light-mode .recharts-cartesian-grid-horizontal line,
+.light-mode .recharts-cartesian-grid-vertical line {
+  stroke: #e2e8f0 !important;
+}
+
+.light-mode .recharts-text,
+.light-mode .recharts-cartesian-axis-tick-value {
+  fill: #1e293b !important;
+  font-weight: 500 !important;
+}
+
+.light-mode .recharts-default-tooltip {
+  background-color: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 0.75rem !important;
+  color: #0f172a !important;
+}
+
+

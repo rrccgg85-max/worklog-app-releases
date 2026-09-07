@@ -1,0 +1,7 @@
+{
+  "name": "WORKLOG · OPERATIONS",
+  "description": "WORKLOG · OPERATIONS - Real-time IT Support Onsite dispatch and service tracking system.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

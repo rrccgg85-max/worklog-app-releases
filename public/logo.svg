@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <!-- Background Container -->
+  <rect width="512" height="512" rx="110" fill="#0B0F19"/>
+  
+  <!-- Clipboard Outer Frame -->
+  <rect x="110" y="110" width="292" height="340" rx="36" fill="#0E1424" stroke="#FFFFFF" stroke-width="20" stroke-linejoin="round"/>
+  
+  <!-- Clipboard Top Clip -->
+  <path d="M190 110V88C190 77 199 68 210 68H302C313 68 322 77 322 88V110" fill="#0E1424" stroke="#FFFFFF" stroke-width="20" stroke-linejoin="round"/>
+  <rect x="228" y="92" width="56" height="12" rx="6" fill="#FFFFFF"/>
+  
+  <!-- Top Clip Ring/Hole Handle -->
+  <path d="M236 68V54C236 46 244 38 256 38C268 38 276 46 276 54V68" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round"/>
+
+  <!-- Subtle Document Inner Lines -->
+  <line x1="160" y1="180" x2="190" y2="180" stroke="#E2E8F0" stroke-width="14" stroke-linecap="round"/>
+  <line x1="160" y1="340" x2="200" y2="340" stroke="#E2E8F0" stroke-width="14" stroke-linecap="round"/>
+  <line x1="312" y1="340" x2="352" y2="340" stroke="#E2E8F0" stroke-width="14" stroke-linecap="round"/>
+  <line x1="160" y1="388" x2="352" y2="388" stroke="#E2E8F0" stroke-width="14" stroke-linecap="round"/>
+
+  <!-- Orange Circle Badge -->
+  <circle cx="256" cy="256" r="64" stroke="#F97316" stroke-width="20" fill="none"/>
+  
+  <!-- Orange Checkmark Inside Circle -->
+  <path d="M224 256L246 278L292 230" stroke="#F97316" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
